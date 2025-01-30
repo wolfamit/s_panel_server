@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
-    "start":"nodemon index.js"
+    "start": "nodemon index.js"
   },
   "author": "amitabh",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "mongodb": "^6.10.0",
     "mongoose": "^8.8.2",
     "morgan": "^1.10.0",
-    "pg": "^8.13.1"
+    "pg": "^8.13.1",
+    "ws": "^8.18.0"
   }
 }
