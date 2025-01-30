@@ -17,8 +17,8 @@ app.get("/", async (req, res) => {
 
 
 app.post("/item", async (req, res) => {
-    const {item_id} = req.body;
-    console.log(item_id);
+    const {cart_id} = await req.body;
+    console.log(cart_id);
 });
 
 app.listen(PORT, () => {
