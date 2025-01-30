@@ -18,6 +18,7 @@ app.get("/", async (req, res) => {
 
 app.post("/item", async (req, res) => {
     const {cart_id} = await req.body;
+    res.status(200).json({cart_id});
     console.log(cart_id);
 });
 
