@@ -17,20 +17,25 @@ app.get("/", async (req, res) => {
 });
 
 
+let cart_id = null;  // Variable to store cart_id in memory
+
+// POST route to set the cart_id
 app.post("/item", async (req, res) => {
-    const {cart_id} = await req.body;
-    global.cart_id = cart_id;
-    console.log(cart_id);
-    res.status(200).json({cart_id});
+    const { cart_id } = req.body;
+    console.log('Received cart_id:', cart_id);
+    cart_id = cart_id;  // Save the cart_id in memory
+    res.status(200).json({ cart_id });
 });
 
+// GET route to retrieve the cart_id
 app.get("/cart", (req, res) => {
-    if (global.cart_id) {
-        res.status(200).json({ cart_id: global.cart_id });
+    if (cart_id) {
+        res.status(200).json({ cart_id });
     } else {
         res.status(404).json({ message: 'Cart ID not found' });
     }
 });
+
 
 
 app.listen(PORT, () => {
