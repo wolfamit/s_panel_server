@@ -1,7 +1,7 @@
+
 import express from 'express';
 import cors from 'cors';
 import './db.js';
-import {WebSocketServer} from 'ws';
 // import  client  from './db.js';
 import dotenv from 'dotenv';
 
@@ -17,42 +17,24 @@ app.get("/", async (req, res) => {
 });
 
 
-const wss = new WebSocketServer({ noServer: true });
-
-wss.on('connection', (ws) => {
-    console.log('Frontend connected via WebSocket');
-    
-    // Listen for messages from the frontend (if needed)
-    ws.on('message', (message) => {
-        console.log('Received from frontend:', message);
-    });
-});
-
-// Upgrade HTTP requests to WebSocket connection
-app.server = app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-});
-
-app.server.on('upgrade', (request, socket, head) => {
-    wss.handleUpgrade(request, socket, head, (ws) => {
-        wss.emit('connection', ws, request);
-    });
-});
-
-// POST route that receives cart_id from Python script
 app.post("/item", async (req, res) => {
-    const { cart_id } = req.body;
-    console.log('Received cart_id:', cart_id);
+    const {cart_id} = await req.body;
+    global.cart_id = cart_id;
+    console.log(cart_id);
+    res.status(200).json({cart_id});
+});
 
-    // Broadcast the cart_id to all connected WebSocket clients
-    wss.clients.forEach((client) => {
-        
-            client.send(JSON.stringify({ cart_id }));
-        
-    });
+app.get("/cart", (req, res) => {
+    if (global.cart_id) {
+        res.status(200).json({ cart_id: global.cart_id });
+    } else {
+        res.status(404).json({ message: 'Cart ID not found' });
+    }
+});
 
-    // Send a response back to the Python script
-    res.status(200).json({ cart_id, message: 'Cart ID sent to frontend' });
+
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
 
 // client.query('SELECT * FROM items')  // Execute the query
