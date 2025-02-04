@@ -40,6 +40,7 @@ app.get("/cart", (req, res) => {
     }
 });
 
+
 app.post("/authorize", async (req, res) => {
     try {
         const { value, secret } = req.body;
@@ -60,7 +61,7 @@ app.post("/authorize", async (req, res) => {
         if (!curr) {
             // Secret not found, authorization failed
             return res.status(403).json({ message: "Authorization failed: Secret not found" });
-        }else if(curr.value){
+        }else if(curr.value && curr.value != value){
             return res.status(403).json({ message: "Authorization failed: MacAdd already found" });
         } else {
             // Secret found, authorization successful
@@ -70,7 +71,7 @@ app.post("/authorize", async (req, res) => {
         }
     } catch (error) {
         console.error("Error during authorization:", error);
-        res.status(500).json({ message: "Internal Server Error" });
+        res.status(500).json({ message: "Internal Server Error" , error : error});
     }
 });
 
