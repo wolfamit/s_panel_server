@@ -4,6 +4,8 @@ const { Client } = pg;
 dotenv.config();
 
 const connectionString = process.env.PG_URL 
+
+
 const client = new Client({
     connectionString,
     ssl: {
