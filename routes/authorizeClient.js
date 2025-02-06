@@ -3,7 +3,7 @@ import AuthorizedClient from '../mongoSchema.js';
 
 const router = express.Router();
 
-router.patch('/authorize', async (req, res) => {
+router.post('/authorize', async (req, res) => {
     try {
         const { value, secret } = req.body;
         
