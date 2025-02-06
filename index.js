@@ -8,6 +8,9 @@ import authorizeClient from './routes/authorizeClient.js';
 import getSecretDetails from './routes/getSecretDetails.js';
 import deleteSecret from './routes/deleteSecret.js';
 import blockSecret from './routes/blockSecret.js';
+import authenticationAdmin from './routes/authenticationAdmin.js';
+import createAdmin from './routes/addAdmin.js';
+import auth from './middleware/auth.js'
 import './mongoDb.js';
 
 dotenv.config();
@@ -49,10 +52,12 @@ app.get("/cart", (req, res) => {
 });
 
 app.use("/api", authorizeClient);
-app.use('/api', addsecret);
-app.use('/api', getSecretDetails);
-app.use('/api', deleteSecret);
-app.use('/api', blockSecret);
+app.use('/api', auth , addsecret);
+app.use('/api', auth ,getSecretDetails);
+app.use('/api', auth ,deleteSecret);
+app.use('/api', auth , blockSecret);
+app.use('/admin', authenticationAdmin);
+app.use('/admin', auth ,createAdmin);
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
