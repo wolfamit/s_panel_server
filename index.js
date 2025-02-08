@@ -8,6 +8,7 @@ import authorizeClient from './routes/authorizeClient.js';
 import getSecretDetails from './routes/getSecretDetails.js';
 import deleteSecret from './routes/deleteSecret.js';
 import blockSecret from './routes/blockSecret.js';
+import ResetSecret from './routes/ResetSecret.js';
 import authenticationAdmin from './routes/authenticationAdmin.js';
 import createAdmin from './routes/addAdmin.js';
 import auth from './middleware/auth.js'
@@ -56,6 +57,7 @@ app.use('/api', auth , addsecret);
 app.use('/api', auth ,getSecretDetails);
 app.use('/api', auth ,deleteSecret);
 app.use('/api', auth , blockSecret);
+app.use('/api', auth , ResetSecret);
 app.use('/admin', authenticationAdmin);
 app.use('/admin', auth ,createAdmin);
 
