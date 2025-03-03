@@ -7,7 +7,14 @@ const router = express.Router();
 // Route to add a new admin
 router.post('/addAdmin', async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password , role} = req.body;
+        if(
+            !name ||
+            !email ||
+            !password){
+            return res.status(400).json({ message: 'Please fill all the fields' });
+            }
+
         const resp = await Admin.findOne({email})
         if(resp){
             return res.status(400).json({ message: 'Admin already exists' });
@@ -20,6 +27,7 @@ router.post('/addAdmin', async (req, res) => {
             name,
             email,
             password : hashedPassword,
+            role : role || 'admin'
         });
         
         // Save the admin to the database
