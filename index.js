@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import dotenv from 'dotenv';
 import addsecret from './routes/addSecret.js';
 import authorizeClient from './routes/authorizeClient.js';
+import postIDs from './routes/postIDs.js';
+import getIds from './routes/getIds.js';
 import getSecretDetails from './routes/getSecretDetails.js';
 import deleteSecret from './routes/deleteSecret.js';
 import blockSecret from './routes/blockSecret.js';
@@ -53,8 +55,10 @@ app.get("/cart", (req, res) => {
 });
 
 app.use("/api", authorizeClient);
+app.use("/api",  postIDs);
+app.use("/api" , getIds)
 app.use('/api', auth , addsecret);
-app.use('/api', auth ,getSecretDetails);
+app.use('/api', auth , getSecretDetails);
 app.use('/api', auth ,deleteSecret);
 app.use('/api', auth , blockSecret);
 app.use('/api', auth , ResetSecret);
