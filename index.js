@@ -55,7 +55,7 @@ app.get("/cart", (req, res) => {
 });
 
 app.use("/api", authorizeClient);
-app.use("/api",  postIDs);
+app.use("/api", postIDs);
 app.use("/api" , getIds)
 app.use('/api', auth , addsecret);
 app.use('/api', auth , getSecretDetails);
